@@ -47,11 +47,11 @@ function downLoadFile(url) {
     }
 
     return new Promise((resolve, reject) => {
-        let cur = 0, timeHandle;
+        let cur = 0, timeHandle, len;
         hp.get(url, (res) => {
             const { statusCode } = res;
             const contentType = res.headers['content-type'];
-            const len = parseInt(res.headers['content-length'], 10);
+            len = parseInt(res.headers['content-length'], 10);
 
             let error;
             // 任何 2xx 状态码都表示成功的响应，但是这里只检查 200。
@@ -76,7 +76,7 @@ function downLoadFile(url) {
 
             timeHandle = setInterval(() => {
                 console.log(`${url} - progress:${(100.0 * cur / len).toFixed(2)}%`)
-            }, 3000)
+            }, 2000)
         }).on('error', (e) => {
             clearInterval(timeHandle)
             reject(`出现错误: ${e.message}`)
